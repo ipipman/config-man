@@ -1,0 +1,12 @@
+### list
+GET http://127.0.0.1:9129/list?app=app1&env=dev&ns=public
+
+### update
+POST http://127.0.0.1:9129/update?app=app1&env=dev&ns=public
+Content-Type: application/json
+
+{
+  "ipman.a": "key100",
+  "ipman.b": "key200",
+  "ipman.c": "key300"
+}
