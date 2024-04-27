@@ -23,8 +23,10 @@ public class ConfigController {
 
     Map<String, Long> VERSION = new HashMap<>();
 
-    @GetMapping("/list")
-    public List<Configs> list(String app, String env, String ns) {
+    @RequestMapping("/list")
+    public List<Configs> list(@RequestParam("app") String app,
+                              @RequestParam("env") String env,
+                              @RequestParam("ns") String ns) {
         return mapper.list(app, env, ns);
     }
 
@@ -49,7 +51,9 @@ public class ConfigController {
     }
 
     @GetMapping("/version")
-    public long version(String app, String env, String ns) {
+    public long version(@RequestParam("app") String app,
+                        @RequestParam("env") String env,
+                        @RequestParam("ns") String ns) {
         return VERSION.getOrDefault(app + "-" + env + "-" + ns, -1L);
     }
 

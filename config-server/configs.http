@@ -10,3 +10,6 @@ Content-Type: application/json
   "ipman.b": "key200",
   "ipman.c": "key300"
 }
+
+### version
+GET http://127.0.0.1:9129/version?app=app1&env=dev&ns=public
