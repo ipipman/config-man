@@ -4,4 +4,6 @@ server:
 
 
 ipman:
-  a: "default-value"
+  a: "a-00"
+  b: "b-00"
+  c: "c-00"
