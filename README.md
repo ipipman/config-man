@@ -38,11 +38,19 @@
 
 
 
-<img src="/Users/zhanghaili/Library/Application Support/typora-user-images/image-20240503211343793.png" alt="image-20240503211343793" />
+模型参考apollo 与 nacos,
+
+一个完整的配置中心, 包括server 和client 两部分
+
+其中server保存所有的持久化配置数据,client 可以通过 server 提供的API拿到所有需要的配置集合, 并且在server断数据变化时拿到新的配置数据
+
+与spring集成: springboot 里, 存在两种配置的绑定方式,一个是通过 Vlaue 注解绑定的属性, 一个是通过 ConfigurationProperties 绑定的属性类. 需要考虑这两种不同配置方式的处理
+
+
+
+<img src="https://ipman-blog-1304583208.cos.ap-nanjing.myqcloud.com/rpcman%2Fregistry%2F341714752124_.pic_hd.jpg" width="700px"/>
 
 
 
 
-
-![image-20240503211050646](/Users/zhanghaili/Library/Application Support/typora-user-images/image-20240503211050646.png)
 
