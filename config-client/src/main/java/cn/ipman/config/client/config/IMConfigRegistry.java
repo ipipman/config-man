@@ -12,7 +12,6 @@ import java.util.Optional;
 
 /**
  * registry ipman config bean
- *
  * 该函数是一个实现ImportBeanDefinitionRegistrar接口的类，用于在Spring容器中注册BeanDefinition。
  * 它的registerBeanDefinitions方法会在导入注解 metadata时被调用，
  * 通过判断PropertySourcesProcessor是否已经注册，来决定是否注册PropertySourcesProcessor。

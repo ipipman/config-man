@@ -17,7 +17,6 @@ import java.util.Map;
 
 /**
  * ipman property sources processor
- *
  * 该类是一个配置类，用于在Spring应用启动时，通过http请求从ipman-config-server获取配置，并将配置添加到Spring环境变量中。
  *
  * @Author IpMan
@@ -31,7 +30,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 
     Environment environment;
 
-    
+
     /**
      * 处理 BeanFactory，在 Spring 应用启动过程中注入自定义属性源。
      *
