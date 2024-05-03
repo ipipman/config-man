@@ -23,6 +23,7 @@
     <modules>
         <module>config-server</module>
         <module>config-client</module>
+        <module>config-demo</module>
     </modules>
 
     <build>
