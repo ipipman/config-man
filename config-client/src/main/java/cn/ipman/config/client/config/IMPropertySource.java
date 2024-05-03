@@ -1,4 +1,4 @@
-package cn.ipman.config.client;
+package cn.ipman.config.client.config;
 
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.lang.Nullable;
@@ -16,16 +16,12 @@ public class IMPropertySource extends EnumerablePropertySource<IMConfigService> 
     }
 
     @Override
-    @Nullable
+    @SuppressWarnings("NullableProblems")
     public String[] getPropertyNames() {
-        if (source.getPropertyNames().length == 0){
-            return new String[]{};
-        }
         return source.getPropertyNames();
     }
 
     @Override
-    @Nullable
     public Object getProperty(@Nullable String name) {
         return source.getProperty(name);
     }

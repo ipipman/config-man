@@ -1,4 +1,4 @@
-package cn.ipman.config.client;
+package cn.ipman.config.client.config;
 
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public class IMConfigServiceImpl implements IMConfigService {
     @Override
     public String[] getPropertyNames() {
         if (this.config == null) {
-            return new String[0];
+            return new String[]{};
         }
         return this.config.keySet().toArray(new String[0]);
     }

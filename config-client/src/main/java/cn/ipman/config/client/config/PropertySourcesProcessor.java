@@ -1,4 +1,4 @@
-package cn.ipman.config.client;
+package cn.ipman.config.client.config;
 
 import lombok.Data;
 import lombok.NonNull;

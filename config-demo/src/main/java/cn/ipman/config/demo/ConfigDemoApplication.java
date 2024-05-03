@@ -1,6 +1,6 @@
 package cn.ipman.config.demo;
 
-import cn.ipman.config.client.EnableIpManConfig;
+import cn.ipman.config.client.annotation.EnableIpManConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;

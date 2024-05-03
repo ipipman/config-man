@@ -1,6 +1,7 @@
-package cn.ipman.config.client;
+package cn.ipman.config.client.annotation;
 
 
+import cn.ipman.config.client.config.IMConfigRegistry;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
