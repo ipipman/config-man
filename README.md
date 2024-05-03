@@ -35,3 +35,14 @@
 
 #### 配置中心提供的核心功能
 <img src="https://ipman-blog-1304583208.cos.ap-nanjing.myqcloud.com/rpcman%2Fregistry%2F311714223039_.pic_hd.jpg" width="700px">
+
+
+
+<img src="/Users/zhanghaili/Library/Application Support/typora-user-images/image-20240503211343793.png" alt="image-20240503211343793" />
+
+
+
+
+
+![image-20240503211050646](/Users/zhanghaili/Library/Application Support/typora-user-images/image-20240503211050646.png)
+
