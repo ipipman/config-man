@@ -18,6 +18,8 @@ import java.util.Map;
 /**
  * ipman property sources processor
  *
+ * 该类是一个配置类，用于在Spring应用启动时，通过http请求从ipman-config-server获取配置，并将配置添加到Spring环境变量中。
+ *
  * @Author IpMan
  * @Date 2024/5/3 22:51
  */
@@ -29,34 +31,57 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 
     Environment environment;
 
+    
+    /**
+     * 处理 BeanFactory，在 Spring 应用启动过程中注入自定义属性源。
+     *
+     * @param beanFactory ConfigurableListableBeanFactory，
+     *                    Spring BeanFactory 的一个接口，提供访问和操作 Spring 容器中所有 Bean 的能力。
+     * @throws BeansException 如果处理过程中发生错误。
+     */
     @Override
     public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
         ConfigurableEnvironment env = (ConfigurableEnvironment) environment;
+        // 检查是否已存在 ipman 的属性源，若存在则不重复添加
         if (env.getPropertySources().contains(IPMAN_PROPERTY_SOURCES)) {
             return;
         }
-        // 通过http请求,去ipman-config-server 获取配置
+
+        // 模拟从 ipman-config-server 获取配置
         Map<String, String> config = new HashMap<>();
         config.put("ipman.a", "aa500");
         config.put("ipman.b", "bb600");
         config.put("ipman.c", "cc700");
 
+        // 使用获取到的配置创建配置服务和属性源
         IMConfigService configService = new IMConfigServiceImpl(config);
         IMPropertySource propertySource = new IMPropertySource(IPMAN_PROPERTY_SOURCE, configService);
-        // 组合的属性源
+
+        // 创建组合属性源并将 ipman 的属性源添加到其中
         CompositePropertySource composite = new CompositePropertySource(IPMAN_PROPERTY_SOURCES);
         composite.addPropertySource(propertySource);
-        // 添加到环境变量最前面
+
+        // 将组合属性源添加到环境变量中，并确保其被最先访问
         env.getPropertySources().addFirst(composite);
 
     }
 
+
+    /**
+     * 获取Bean处理器的优先级，实现 PriorityOrdered 接口。
+     *
+     * @return int 返回处理器的优先级，值越小优先级越高。
+     */
     @Override
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE;
     }
 
-
+    /**
+     * 设置 Spring 环境配置
+     *
+     * @param environment Environment，Spring 环境接口，提供环境变量的访问。
+     */
     @Override
     public void setEnvironment(@NonNull Environment environment) {
         this.environment = environment;
