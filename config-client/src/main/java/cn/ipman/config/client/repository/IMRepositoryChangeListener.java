@@ -4,6 +4,7 @@ import cn.ipman.config.client.meta.ConfigMeta;
 
 import java.util.Map;
 
+@FunctionalInterface
 public interface IMRepositoryChangeListener {
 
     /**
@@ -19,7 +20,7 @@ public interface IMRepositoryChangeListener {
      * ChangeEvent 类是一个记录类（JDK 16及以上版本特性），用于封装配置变化事件的信息。
      * 包含配置的元数据和新配置的数据。
      */
-    record ChangeEvent(ConfigMeta meta, Map<String, String> config) {};
+    record ChangeEvent(ConfigMeta meta, Map<String, String> config) {}
 
 
     //  如果jdk版本低于16, 不兼容record, 以下是Java8的实现

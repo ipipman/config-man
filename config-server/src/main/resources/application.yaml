@@ -24,6 +24,7 @@ logging:
   level:
     root: info
     org.springframework.jdbc: debug
+    cn.ipman.config: debug
 
 mybatis:
   configuration:
