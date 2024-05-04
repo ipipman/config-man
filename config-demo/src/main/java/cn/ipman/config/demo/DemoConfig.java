@@ -14,5 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class DemoConfig {
 
     private String a;
+    private String b;
+    private String c;
 
 }

@@ -2,8 +2,13 @@ server:
   port: 9128
 
 
-
 ipman:
   a: "a-00"
   b: "b-00"
   c: "c-00"
+
+
+logging:
+  level:
+    root: info
+    cn.ipman.config: debug

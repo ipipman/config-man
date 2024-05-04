@@ -20,5 +20,22 @@ public class ConfigMeta {
     String ns;
     String configServer;
 
+    public String genKey() {
+        return this.getApp() + "_" + this.getEnv() + "_" + this.getNs();
+    }
+
+    public String listPath() {
+        return this.path("list");
+    }
+
+    public String versionPath() {
+        return this.path("version");
+    }
+
+    private String path(String context) {
+        return this.getConfigServer() + "/" + context + "?app=" + this.getApp()
+                + "&env=" + this.getEnv() + "&ns=" + this.getNs();
+    }
+
 
 }

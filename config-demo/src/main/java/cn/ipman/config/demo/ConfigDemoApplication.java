@@ -9,16 +9,26 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
 @SpringBootApplication
 @EnableConfigurationProperties({DemoConfig.class})
 @EnableIpManConfig
+@RestController
 public class ConfigDemoApplication {
 
     @Value("${ipman.a}")
     private String a;
+
+    @Value("${ipman.b}")
+    private String b;
+
+    @Value("${ipman.c}")
+    private String c;
+
 
     @Autowired
     private DemoConfig demoConfig;
@@ -29,6 +39,16 @@ public class ConfigDemoApplication {
 
     @Autowired
     Environment environment;
+
+    @GetMapping("/")
+    public String demo() {
+        return "ipman.a = " + a + ", \n" +
+                "ipman.b = " + b + ", \n" +
+                "ipman.c = " + c + ", \n" +
+                "ipman.demo.a = " + demoConfig.getA() + ", \n" +
+                "ipman.demo.b = " + demoConfig.getA() + ", \n" +
+                "ipman.demo.c = " + demoConfig.getA() + ", \n";
+    }
 
     @Bean
     ApplicationRunner applicationRunner() {
