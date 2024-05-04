@@ -14,9 +14,11 @@ import java.util.Map;
  */
 public interface IMConfigService extends IMRepositoryChangeListener {
 
+
     static IMConfigService getDefault(ApplicationContext applicationContext, ConfigMeta meta) {
         IMRepository repository = IMRepository.getDefault(meta);
         Map<String, String> config = repository.getConfig();
+
         IMConfigService configService = new IMConfigServiceImpl(applicationContext, config);
         repository.addListener(configService);
         return configService;
@@ -25,7 +27,5 @@ public interface IMConfigService extends IMRepositoryChangeListener {
     String[] getPropertyNames();
 
     String getProperty(String name);
-
-
 
 }

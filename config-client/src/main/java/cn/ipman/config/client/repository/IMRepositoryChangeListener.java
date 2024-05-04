@@ -10,7 +10,6 @@ public interface IMRepositoryChangeListener {
 
     record ChangeEvent(ConfigMeta meta, Map<String, String> config) {};
 
-
 //    @Data
 //    @AllArgsConstructor
 //    class ChangeEvent {

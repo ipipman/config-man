@@ -46,8 +46,8 @@ public class ConfigDemoApplication {
                 "ipman.b = " + b + ", \n" +
                 "ipman.c = " + c + ", \n" +
                 "ipman.demo.a = " + demoConfig.getA() + ", \n" +
-                "ipman.demo.b = " + demoConfig.getA() + ", \n" +
-                "ipman.demo.c = " + demoConfig.getA() + ", \n";
+                "ipman.demo.b = " + demoConfig.getB() + ", \n" +
+                "ipman.demo.c = " + demoConfig.getC() + ", \n";
     }
 
     @Bean
