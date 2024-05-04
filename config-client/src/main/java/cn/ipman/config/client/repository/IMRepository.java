@@ -1,6 +1,8 @@
 package cn.ipman.config.client.repository;
 
 import cn.ipman.config.client.config.ConfigMeta;
+import cn.ipman.config.client.config.IMConfigServiceImpl;
+import org.springframework.context.ApplicationContext;
 
 import java.util.Map;
 
@@ -17,4 +19,8 @@ public interface IMRepository {
     }
 
     Map<String, String> getConfig();
+
+    void addListener(IMRepositoryChangeListener listener);
+
+
 }

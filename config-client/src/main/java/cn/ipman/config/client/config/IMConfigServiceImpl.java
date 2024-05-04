@@ -1,5 +1,8 @@
 package cn.ipman.config.client.config;
 
+import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
+import org.springframework.context.ApplicationContext;
+
 import java.util.Map;
 
 /**
@@ -11,8 +14,11 @@ import java.util.Map;
 public class IMConfigServiceImpl implements IMConfigService {
 
     Map<String, String> config;
+    ApplicationContext applicationContext;
 
-    public IMConfigServiceImpl(Map<String, String> config) {
+
+    public IMConfigServiceImpl(ApplicationContext applicationContext, Map<String, String> config) {
+        this.applicationContext = applicationContext;
         this.config = config;
     }
 
@@ -27,6 +33,15 @@ public class IMConfigServiceImpl implements IMConfigService {
     @Override
     public String getProperty(String name) {
         return this.config.getOrDefault(name, null);
+    }
+
+    @Override
+    public void onChange(ChangeEvent changeEvent) {
+        this.config = changeEvent.config();
+        if (!config.isEmpty()) {
+            System.out.println("[IM_CONFIG] fire an EnvironmentChangeEvent with keys:" + config.keySet());
+            applicationContext.publishEvent(new EnvironmentChangeEvent(config.keySet()));
+        }
     }
 }
 

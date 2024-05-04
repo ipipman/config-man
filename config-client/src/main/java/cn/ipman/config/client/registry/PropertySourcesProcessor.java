@@ -7,6 +7,8 @@ import lombok.NonNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
@@ -14,8 +16,6 @@ import org.springframework.core.env.CompositePropertySource;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ipman property sources processor
@@ -25,13 +25,13 @@ import java.util.Map;
  * @Date 2024/5/3 22:51
  */
 @Data
-public class PropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, PriorityOrdered {
+public class PropertySourcesProcessor implements BeanFactoryPostProcessor, ApplicationContextAware, EnvironmentAware, PriorityOrdered {
 
     private final static String IPMAN_PROPERTY_SOURCES = "IMPropertySources";
     private final static String IPMAN_PROPERTY_SOURCE = "IMPropertySource";
 
     Environment environment;
-
+    ApplicationContext applicationContext;
 
     /**
      * 处理 BeanFactory，在 Spring 应用启动过程中注入自定义属性源。
@@ -49,20 +49,19 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         }
 
         // 模拟从 ipman-config-server 获取配置
-        Map<String, String> config = new HashMap<>();
-        config.put("ipman.a", "aa500");
-        config.put("ipman.b", "bb600");
-        config.put("ipman.c", "cc700");
+//        Map<String, String> config = new HashMap<>();
+//        config.put("ipman.a", "aa500");
+//        config.put("ipman.b", "bb600");
+//        config.put("ipman.c", "cc700");
 
         String app = ENV.getProperty("ipman.app", "app1");
         String env = ENV.getProperty("ipman.env", "dev");
         String ns = ENV.getProperty("ipman.ns", "public");
         String configServer = ENV.getProperty("ipman.configServer", "http://localhost:9129");
 
-        ConfigMeta configMeta = new ConfigMeta(app, env, ns, configServer);
-
         // 使用获取到的配置创建配置服务和属性源
-        IMConfigService configService = IMConfigService.getDefault(configMeta);
+        ConfigMeta configMeta = new ConfigMeta(app, env, ns, configServer);
+        IMConfigService configService = IMConfigService.getDefault(applicationContext, configMeta);
         IMPropertySource propertySource = new IMPropertySource(IPMAN_PROPERTY_SOURCE, configService);
 
         // 创建组合属性源并将 ipman 的属性源添加到其中
@@ -93,5 +92,10 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     @Override
     public void setEnvironment(@NonNull Environment environment) {
         this.environment = environment;
+    }
+
+    @Override
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }
