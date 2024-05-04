@@ -9,15 +9,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-
     <groupId>cn.ipman</groupId>
     <artifactId>config-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>config-demo</name>
     <description>config-demo</description>
-    <properties>
-        <java.version>17</java.version>
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
