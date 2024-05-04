@@ -1,2 +1,7 @@
 server:
   port: 9128
+
+logging:
+  level:
+    root: info
+    cn.ipman.config.client.config: debug

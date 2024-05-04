@@ -40,9 +40,9 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
      */
     @Override
     public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        ConfigurableEnvironment env = (ConfigurableEnvironment) environment;
+        ConfigurableEnvironment ENV = (ConfigurableEnvironment) environment;
         // 检查是否已存在 ipman 的属性源，若存在则不重复添加
-        if (env.getPropertySources().contains(IPMAN_PROPERTY_SOURCES)) {
+        if (ENV.getPropertySources().contains(IPMAN_PROPERTY_SOURCES)) {
             return;
         }
 
@@ -52,8 +52,15 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         config.put("ipman.b", "bb600");
         config.put("ipman.c", "cc700");
 
+        String app = ENV.getProperty("ipman.app", "app1");
+        String env = ENV.getProperty("ipman.env", "dev");
+        String ns = ENV.getProperty("ipman.ns", "public");
+        String configServer = ENV.getProperty("ipman.configServer", "http://localhost:9129");
+
+        ConfigMeta configMeta = new ConfigMeta(app, env, ns, configServer);
+
         // 使用获取到的配置创建配置服务和属性源
-        IMConfigService configService = new IMConfigServiceImpl(config);
+        IMConfigService configService = IMConfigService.getDefault(configMeta);
         IMPropertySource propertySource = new IMPropertySource(IPMAN_PROPERTY_SOURCE, configService);
 
         // 创建组合属性源并将 ipman 的属性源添加到其中
@@ -61,7 +68,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         composite.addPropertySource(propertySource);
 
         // 将组合属性源添加到环境变量中，并确保其被最先访问
-        env.getPropertySources().addFirst(composite);
+        ENV.getPropertySources().addFirst(composite);
 
     }
 
