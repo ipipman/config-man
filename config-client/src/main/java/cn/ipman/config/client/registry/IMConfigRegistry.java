@@ -1,4 +1,4 @@
-package cn.ipman.config.client.config;
+package cn.ipman.config.client.registry;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;

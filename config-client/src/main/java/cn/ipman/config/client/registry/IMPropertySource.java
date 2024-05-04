@@ -1,5 +1,6 @@
-package cn.ipman.config.client.config;
+package cn.ipman.config.client.registry;
 
+import cn.ipman.config.client.config.IMConfigService;
 import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.lang.Nullable;
 

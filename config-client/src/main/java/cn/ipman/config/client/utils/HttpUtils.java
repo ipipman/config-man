@@ -5,6 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.parser.Feature;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import lombok.Generated;
@@ -54,7 +55,7 @@ public interface HttpUtils {
             log.debug(" =====>>>>>> response: " + respJson);
             return JSON.parseObject(respJson, clazz);
         } catch (Throwable var3) {
-            throw var3;
+            throw new RuntimeException(var3);
         }
     }
 
@@ -122,7 +123,7 @@ public interface HttpUtils {
             Request request = (new Request.Builder()).url(url).post(RequestBody.create(requestString, JSONTYPE)).build();
 
             try {
-                String respJson = this.client.newCall(request).execute().body().string();
+                String respJson = Objects.requireNonNull(this.client.newCall(request).execute().body()).string();
                 log.debug(" ===> respJson = " + respJson);
                 return respJson;
             } catch (Exception var5) {
@@ -135,7 +136,7 @@ public interface HttpUtils {
             Request request = (new Request.Builder()).url(url).get().build();
 
             try {
-                String respJson = this.client.newCall(request).execute().body().string();
+                String respJson = Objects.requireNonNull(this.client.newCall(request).execute().body()).string();
                 log.debug(" ===> respJson = " + respJson);
                 return respJson;
             } catch (Exception var4) {
