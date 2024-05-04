@@ -1,8 +1,6 @@
 package cn.ipman.config.client.repository;
 
-import cn.ipman.config.client.config.ConfigMeta;
-import cn.ipman.config.client.config.IMConfigServiceImpl;
-import org.springframework.context.ApplicationContext;
+import cn.ipman.config.client.meta.ConfigMeta;
 
 import java.util.Map;
 

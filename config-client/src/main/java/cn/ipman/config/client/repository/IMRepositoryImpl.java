@@ -1,12 +1,9 @@
 package cn.ipman.config.client.repository;
 
-import cn.ipman.config.client.config.ConfigMeta;
+import cn.ipman.config.client.meta.ConfigMeta;
 import cn.ipman.config.client.utils.HttpUtils;
 import com.alibaba.fastjson.TypeReference;
-import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
-import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +32,7 @@ public class IMRepositoryImpl implements IMRepository {
         executor.scheduleWithFixedDelay(this::heartbeat, 1000, 5000, TimeUnit.MILLISECONDS);
     }
 
-    public void addListener(IMRepositoryChangeListener listener){
+    public void addListener(IMRepositoryChangeListener listener) {
         listeners.add(listener);
     }
 

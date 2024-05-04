@@ -1,7 +1,8 @@
 package cn.ipman.config.client.registry;
 
-import cn.ipman.config.client.config.ConfigMeta;
+import cn.ipman.config.client.meta.ConfigMeta;
 import cn.ipman.config.client.config.IMConfigService;
+import cn.ipman.config.client.config.IMPropertySource;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.beans.BeansException;

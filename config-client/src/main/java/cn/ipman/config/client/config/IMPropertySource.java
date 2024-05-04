@@ -1,4 +1,4 @@
-package cn.ipman.config.client.registry;
+package cn.ipman.config.client.config;
 
 import cn.ipman.config.client.config.IMConfigService;
 import org.springframework.core.env.EnumerablePropertySource;
@@ -16,6 +16,13 @@ import org.springframework.lang.Nullable;
  */
 public class IMPropertySource extends EnumerablePropertySource<IMConfigService> {
 
+    /**
+     * 构造函数，初始化属性源。
+     * 通过SpringPropertySource添加配置中心数据源, 这样Spring就能拿到我们写入的配置了
+     *
+     * @param name 属性源的名称。
+     * @param source 提供配置属性的服务实例。
+     */
     public IMPropertySource(String name, IMConfigService source) {
         super(name, source);
     }

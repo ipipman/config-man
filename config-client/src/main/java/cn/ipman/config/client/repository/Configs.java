@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Configs {
 
-    private String app;
-    private String env;
-    private String ns;
-    private String pkey;
-    private String pval;
+    private String app;     // 配置中心server返回的, 应用名
+    private String env;     // 配置中心server返回的, 环境
+    private String ns;      // 配置中心server返回的, 命名空间
+    private String pkey;    // 配置中心server返回的, 配置的key
+    private String pval;    // 配置中心server返回的, 配置的val
 }
