@@ -1,4 +1,4 @@
-package cn.ipman.config.client.repository;
+package cn.ipman.config.client.meta;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

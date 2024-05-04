@@ -49,12 +49,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
             return;
         }
 
-        // 模拟从 ipman-config-server 获取配置
-//        Map<String, String> config = new HashMap<>();
-//        config.put("ipman.a", "aa500");
-//        config.put("ipman.b", "bb600");
-//        config.put("ipman.c", "cc700");
-
+        // 设置config-server远程服务的调用信息
         String app = ENV.getProperty("ipman.app", "app1");
         String env = ENV.getProperty("ipman.env", "dev");
         String ns = ENV.getProperty("ipman.ns", "public");
@@ -62,7 +57,14 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
 
         // 使用获取到的配置创建配置服务和属性源
         ConfigMeta configMeta = new ConfigMeta(app, env, ns, configServer);
+
+        // 创建配置中心实现类, 省去技术细节, 理解了下:
+        // 1.启动时候 ConfigService 从 Repository拿配置,  同时 Repository 关联了 ConfigService 这个对象,.
+        // 2.当 Repository 巡检发现配置变了, 在去改 ConfigService 里的 config.
+        // 3.改完后, 最终再用EnvironmentChangeEvent 去刷新
         IMConfigService configService = IMConfigService.getDefault(applicationContext, configMeta);
+
+        // 创建SpringPropertySource, 此时Spring就能识别我们自定义的配置了
         IMPropertySource propertySource = new IMPropertySource(IPMAN_PROPERTY_SOURCE, configService);
 
         // 创建组合属性源并将 ipman 的属性源添加到其中
@@ -73,7 +75,6 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
         ENV.getPropertySources().addFirst(composite);
 
     }
-
 
     /**
      * 获取Bean处理器的优先级，实现 PriorityOrdered 接口。
@@ -95,6 +96,11 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
         this.environment = environment;
     }
 
+    /**
+     * 设置应用上下文
+     *
+     * @param applicationContext Spring应用的上下文环境。
+     */
     @Override
     public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;

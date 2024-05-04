@@ -1,6 +1,7 @@
 package cn.ipman.config.client.repository;
 
 import cn.ipman.config.client.meta.ConfigMeta;
+import cn.ipman.config.client.meta.Configs;
 import cn.ipman.config.client.utils.HttpUtils;
 import com.alibaba.fastjson.TypeReference;
 import org.jetbrains.annotations.NotNull;
