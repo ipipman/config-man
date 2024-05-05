@@ -33,6 +33,7 @@ public class ConfigDemoApplication {
     @Autowired
     private DemoConfig demoConfig;
 
+    
     public static void main(String[] args) {
         SpringApplication.run(ConfigDemoApplication.class, args);
     }
