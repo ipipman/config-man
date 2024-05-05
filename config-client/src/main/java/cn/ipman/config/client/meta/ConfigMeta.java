@@ -19,7 +19,7 @@ public class ConfigMeta {
     String app;      // 应用名称
     String env;      // 环境标识
     String ns;       // 命名空间
-    String configServer;   // 配置config远程服务器地址
+    String configServer;   // 配置config-server远程服务器地址
 
     /**
      * 生成配置项的键。

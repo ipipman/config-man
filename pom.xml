@@ -11,7 +11,7 @@
 
     <groupId>io.github.ipipman</groupId>
     <artifactId>config-man</artifactId>
-    <version>0.0.1</version>
+    <version>${configman.version}</version>
     <name>config-man</name>
 
     <description>config-man</description>
@@ -46,6 +46,7 @@
     </developers>
 
     <properties>
+        <configman.version>0.0.2-RELEASE</configman.version>
         <java.version>17</java.version>
     </properties>
 
