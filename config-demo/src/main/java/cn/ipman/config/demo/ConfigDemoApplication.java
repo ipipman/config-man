@@ -29,11 +29,9 @@ public class ConfigDemoApplication {
     @Value("${ipman.c}")
     private String c;
 
-
     @Autowired
     private DemoConfig demoConfig;
 
-    
     public static void main(String[] args) {
         SpringApplication.run(ConfigDemoApplication.class, args);
     }
