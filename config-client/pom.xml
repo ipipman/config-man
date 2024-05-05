@@ -6,13 +6,12 @@
     <parent>
         <groupId>io.github.ipipman</groupId>
         <artifactId>config-man</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>cn.ipman</groupId>
     <artifactId>config-client</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>config-client</name>
     <description>config-client</description>
 
