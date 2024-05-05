@@ -1,0 +1,18 @@
+# ci.yml
+name: config-man           # 随意 你的工作流名称
+
+on:
+    push:                   # 触发条件 这里是在push时触发
+        branches: 
+          - main            # 指定触发分支
+jobs:
+    build:
+        runs-on: ubuntu-latest                        # 运行的虚拟机环境 必须
+        steps:
+            - uses: actions/checkout@v3               # 使用工具将代码拉到虚拟机
+            - uses: actions/setup-java@master         # 这里是进行打jar包的工具
+              with:                                   # with指定相关参数
+                  java-version: 17                    # java版本
+                  distribution: "adopt"               # jdk发行版
+                  cache: maven                        # 包管理工具
+            - run: mvn clean package --file pom.xml   # 执行打包命令
