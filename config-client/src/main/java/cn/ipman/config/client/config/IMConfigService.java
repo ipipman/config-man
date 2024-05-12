@@ -27,6 +27,7 @@ public interface IMConfigService extends IMRepositoryChangeListener {
     static IMConfigService getDefault(ApplicationContext applicationContext, ConfigMeta meta) {
         // 获取默认配置仓库实例, 从仓库中(远程server服务)上加载配置
         IMRepository repository = IMRepository.getDefault(meta);
+        // 从配置中心server,获取配置
         Map<String, String> config = repository.getConfig();
 
         // 创建配置服务实例, 注册配置变更监听器

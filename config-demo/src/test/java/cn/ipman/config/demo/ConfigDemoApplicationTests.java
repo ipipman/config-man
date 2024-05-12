@@ -82,9 +82,11 @@ class ConfigDemoApplicationTests {
                                 .contentType("application/json")).andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
-        List<Configs> newConfigs = JSON.parseObject(mvcResult.getResponse().getContentAsString(),
+        List<Configs> newConfigs = JSON.parseObject(
+                mvcResult.getResponse().getContentAsString(),
                 new TypeReference<List<Configs>>() {
-                });
+                }
+        );
         System.out.println("config update to " + newConfigs);
 
 
