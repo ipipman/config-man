@@ -46,7 +46,7 @@
     </developers>
 
     <properties>
-        <configman.version>0.0.3-SNAPSHOT</configman.version>
+        <configman.version>0.0.4</configman.version>
         <java.version>17</java.version>
     </properties>
 
