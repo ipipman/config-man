@@ -28,10 +28,20 @@ public class IMConfigRegistry implements ImportBeanDefinitionRegistrar {
     public void registerBeanDefinitions(@NonNull AnnotationMetadata importingClassMetadata,
                                         @NonNull BeanDefinitionRegistry registry) {
 
+        // 注册 @ConfigurationProperties() 配置方式的注册中心处理器
         registerClass(registry, PropertySourcesProcessor.class);
+        // 注册 @Value() 配置方式的注册中心处理器
         registerClass(registry, SpringValueProcessor.class);
     }
 
+
+    /**
+     * 向给定的 BeanDefinitionRegistry 注册一个类。
+     * 如果该类已经注册，则不进行重复注册。
+     *
+     * @param registry BeanDefinitionRegistry 实例，用于注册 Bean。
+     * @param aClass   需要注册的类。
+     */
     private static void registerClass(BeanDefinitionRegistry registry, Class<?> aClass) {
         System.out.println("registry " + aClass.getName());
         // 判断PropertySourcesProcessor 是否已经注册Bean

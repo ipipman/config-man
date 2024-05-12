@@ -79,10 +79,17 @@ public class IMConfigServiceImpl implements IMConfigService {
         }
     }
 
+    /**
+     * 计算配置变化的键集合。
+     *
+     * @param oldConfigs 旧配置信息。
+     * @param newConfigs 新配置信息。
+     * @return 发生变化的配置键集合。
+     */
     private Set<String> calcChangeKeys(Map<String, String> oldConfigs, Map<String, String> newConfigs) {
         if (oldConfigs.isEmpty()) return newConfigs.keySet();
         if (newConfigs.isEmpty()) return oldConfigs.keySet();
-        // 比较新旧值变化
+        // 比较新旧配置，找出变化的键
         Set<String> news = newConfigs.keySet().stream()
                 .filter(key -> !newConfigs.get(key).equals(oldConfigs.get(key)))
                 .collect(Collectors.toSet());
