@@ -1,6 +1,7 @@
 package cn.ipman.config.server;
 
 import cn.ipman.config.server.dal.ConfigsMapper;
+import cn.ipman.config.server.election.DistributedLocks;
 import cn.ipman.config.server.model.Configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
