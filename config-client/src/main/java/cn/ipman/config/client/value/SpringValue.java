@@ -2,7 +2,6 @@ package cn.ipman.config.client.value;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.core.PriorityOrdered;
 
 import java.lang.reflect.Field;
 

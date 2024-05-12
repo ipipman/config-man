@@ -1,6 +1,5 @@
 package cn.ipman.config.client.value;
 
-import cn.ipman.config.client.repository.IMRepositoryChangeListener;
 import cn.ipman.config.client.utils.FieldUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -12,14 +11,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.EventListener;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * process spring value
@@ -63,7 +60,7 @@ public class SpringValueProcessor implements BeanPostProcessor, BeanFactoryAware
         event.getKeys().forEach(key -> {
             log.info("[IM_CONFIG] >> update spring value: {}", key);
             List<SpringValue> springValues = VALUE_HOLDER.get(key);
-            if (springValues == null | Objects.requireNonNull(springValues).isEmpty()) {
+            if (springValues == null | springValues.isEmpty()) {
                 return;
             }
 

@@ -36,10 +36,10 @@ public class IMConfigRegistry implements ImportBeanDefinitionRegistrar {
         System.out.println("registry " + aClass.getName());
         // 判断PropertySourcesProcessor 是否已经注册Bean
         Optional<String> first = Arrays.stream(registry.getBeanDefinitionNames())
-                .filter(x -> PropertySourcesProcessor.class.getName().equals(x))
+                .filter(x -> aClass.getName().equals(x))
                 .findFirst();
         if (first.isPresent()) {
-            System.out.println( aClass.getName() + " already registered");
+            System.out.println(aClass.getName() + " already registered");
             return;
         }
         // 注册PropertySourcesProcessor
