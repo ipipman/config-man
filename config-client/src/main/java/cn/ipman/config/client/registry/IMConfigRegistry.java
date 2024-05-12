@@ -1,5 +1,6 @@
 package cn.ipman.config.client.registry;
 
+import cn.ipman.config.client.value.SpringValueProcessor;
 import lombok.NonNull;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -27,21 +28,25 @@ public class IMConfigRegistry implements ImportBeanDefinitionRegistrar {
     public void registerBeanDefinitions(@NonNull AnnotationMetadata importingClassMetadata,
                                         @NonNull BeanDefinitionRegistry registry) {
 
-        // ImportBeanDefinitionRegistrar.super.registerBeanDefinitions(importingClassMetadata, registry);
+        registerClass(registry, PropertySourcesProcessor.class);
+        registerClass(registry, SpringValueProcessor.class);
+    }
 
+    private static void registerClass(BeanDefinitionRegistry registry, Class<?> aClass) {
+        System.out.println("registry " + aClass.getName());
         // 判断PropertySourcesProcessor 是否已经注册Bean
         Optional<String> first = Arrays.stream(registry.getBeanDefinitionNames())
-                .filter(x -> PropertySourcesProcessor.class.getName().equals(x)).findFirst();
+                .filter(x -> PropertySourcesProcessor.class.getName().equals(x))
+                .findFirst();
         if (first.isPresent()) {
-            System.out.println("PropertySourcesProcessor already registered");
+            System.out.println( aClass.getName() + " already registered");
             return;
         }
-
         // 注册PropertySourcesProcessor
-        System.out.println("register PropertySourcesProcessor");
         AbstractBeanDefinition beanDefinition =
-                BeanDefinitionBuilder.genericBeanDefinition(PropertySourcesProcessor.class).getBeanDefinition();
-        registry.registerBeanDefinition(PropertySourcesProcessor.class.getName(), beanDefinition);
+                BeanDefinitionBuilder.genericBeanDefinition(aClass).getBeanDefinition();
+        registry.registerBeanDefinition(aClass.getName(), beanDefinition);
 
+        System.out.println("registered " + aClass.getName());
     }
 }
