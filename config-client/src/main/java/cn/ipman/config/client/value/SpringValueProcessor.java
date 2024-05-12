@@ -57,10 +57,11 @@ public class SpringValueProcessor implements BeanPostProcessor, BeanFactoryAware
 
     @Override
     public void onApplicationEvent(@NotNull EnvironmentChangeEvent event) {
+        log.info("[IM_CONFIG] >> update spring value for keys: {}", event.getKeys());
         event.getKeys().forEach(key -> {
             log.info("[IM_CONFIG] >> update spring value: {}", key);
             List<SpringValue> springValues = VALUE_HOLDER.get(key);
-            if (springValues == null | springValues.isEmpty()) {
+            if (springValues == null || springValues.isEmpty()) {
                 return;
             }
 

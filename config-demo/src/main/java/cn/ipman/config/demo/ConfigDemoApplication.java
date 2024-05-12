@@ -20,7 +20,7 @@ import java.util.Arrays;
 @RestController
 public class ConfigDemoApplication {
 
-    @Value("${ipman.a}")
+    @Value("${ipman.a:213213}")
     private String a;
 
     @Value("${ipman.b}")

@@ -1,9 +1,12 @@
 package cn.ipman.config.client.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * IpMan配置服务实现类，用于管理和提供配置信息
@@ -11,6 +14,7 @@ import java.util.Map;
  * @Author IpMan
  * @Date 2024/5/3 22:47
  */
+@Slf4j
 public class IMConfigServiceImpl implements IMConfigService {
 
     // 配置信息
@@ -61,12 +65,31 @@ public class IMConfigServiceImpl implements IMConfigService {
      */
     @Override
     public void onChange(ChangeEvent changeEvent) {
+        // 对比新旧值的变化
+        Set<String> keys = calcChangeKeys(config, changeEvent.config());
+        if (keys.isEmpty()) {
+            log.info("[IM_CONFIG] calcChangeKeys return empty, ignore update.");
+        }
+
         this.config = changeEvent.config();
         if (!config.isEmpty()) {
             /// 通过 spring-cloud-context 刷新配置
-            System.out.println("[IM_CONFIG] fire an EnvironmentChangeEvent with keys:" + config.keySet());
-            applicationContext.publishEvent(new EnvironmentChangeEvent(config.keySet()));
+            log.info("[IM_CONFIG] fire an EnvironmentChangeEvent with keys:" + config.keySet());
+            applicationContext.publishEvent(new EnvironmentChangeEvent(keys));
         }
+    }
+
+    private Set<String> calcChangeKeys(Map<String, String> oldConfigs, Map<String, String> newConfigs) {
+        if (oldConfigs.isEmpty()) return newConfigs.keySet();
+        if (newConfigs.isEmpty()) return oldConfigs.keySet();
+        // 比较新旧值变化
+        Set<String> news = newConfigs.keySet().stream()
+                .filter(key -> !newConfigs.get(key).equals(oldConfigs.get(key)))
+                .collect(Collectors.toSet());
+        oldConfigs.keySet().stream()
+                .filter(key -> !newConfigs.containsKey(key))
+                .forEach(news::add);
+        return news;
     }
 }
 

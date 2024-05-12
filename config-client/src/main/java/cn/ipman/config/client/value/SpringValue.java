@@ -15,10 +15,10 @@ import java.lang.reflect.Field;
 @AllArgsConstructor
 public class SpringValue {
 
-    private Object bean;
-    private String beanName;
-    private String key;
-    private String placeholder;
-    private Field field;
+    private Object bean;           // 配置关联的关联的 Bean 对象
+    private String beanName;       // 配置关联的关联的 Bean 对象名称
+    private String key;            // @Value配置的key
+    private String placeholder;    // @Value配置的占位符
+    private Field field;           // @Value配置的 Bean 成员
 
 }
