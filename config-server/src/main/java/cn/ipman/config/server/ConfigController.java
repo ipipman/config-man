@@ -21,6 +21,9 @@ public class ConfigController {
     @Autowired
     ConfigsMapper mapper;
 
+    @Autowired
+    DistributedLocks distributedLocks;
+
     Map<String, Long> VERSION = new HashMap<>();
 
     @RequestMapping("/list")
@@ -57,5 +60,10 @@ public class ConfigController {
         return VERSION.getOrDefault(app + "-" + env + "-" + ns, -1L);
     }
 
+
+    @GetMapping("/status")
+    public boolean version() {
+        return distributedLocks.getLocked().get();
+    }
 
 }

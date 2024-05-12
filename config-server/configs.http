@@ -11,15 +11,28 @@ Content-Type: application/json
   "ipman.c": "key33"
 }
 
+
 ### update-2
 POST http://127.0.0.1:9129/update?app=app1&env=dev&ns=public
 Content-Type: application/json
 
 {
-  "ipman.a": "key100",
-  "ipman.b": "key200",
-  "ipman.c": "key300"
+  "rpcman.provider.metas.dc": "shanghai-11",
+  "rpcman.provider.metas.tc": "500",
+  "rpcman.provider.metas.unit": "B002",
+  "rpcman.provider.metas.gray": "true"
 }
+
 
 ### version
 GET http://127.0.0.1:9129/version?app=app1&env=dev&ns=public
+
+
+### status 9129
+GET http://127.0.0.1:9129/status
+
+### status 9130
+GET http://127.0.0.1:9130/status
+
+### status 9131
+GET http://127.0.0.1:9131/status
