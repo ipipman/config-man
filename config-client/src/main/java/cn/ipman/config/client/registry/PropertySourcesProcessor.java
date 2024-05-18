@@ -43,8 +43,8 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Appli
      */
     @Override
     public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        ConfigurableEnvironment ENV = (ConfigurableEnvironment) environment;
         // 检查是否已存在 ipman 的属性源，若存在则不重复添加
+        ConfigurableEnvironment ENV = (ConfigurableEnvironment) environment;
         if (ENV.getPropertySources().contains(IPMAN_PROPERTY_SOURCES)) {
             return;
         }

@@ -40,7 +40,8 @@ public class IMRepositoryImpl implements IMRepository {
     public IMRepositoryImpl(ConfigMeta meta) {
         this.meta = meta;
         // 每隔5秒执行一次心跳检测任务
-        executor.scheduleWithFixedDelay(this::heartbeat, 1000, 5000, TimeUnit.MILLISECONDS);
+        // executor.scheduleWithFixedDelay(this::heartbeat, 1000, 5000, TimeUnit.MILLISECONDS);
+        new Thread(this::heartbeat).start();
     }
 
     /**
@@ -85,28 +86,31 @@ public class IMRepositoryImpl implements IMRepository {
      * 心跳检测任务, 通过Config-Server获取配置的版本号，用于检测配置版本是否有更新。
      */
     private void heartbeat() {
-        // 通过Config-Server获取配置版本号
-        String versionPath = meta.versionPath();
-        Long version = HttpUtils.httpGet(versionPath, new TypeReference<Long>() {
-        });
+        while (true) {
+            try {
+                // 通过请求Config-Server获取配置版本号
+                String versionPath = meta.versionPath();
+                Long version = HttpUtils.httpGet(versionPath, new TypeReference<Long>() {
+                });
+                // 检查是否有配置更新
+                String key = meta.genKey();
+                Long oldVersion = versionMap.getOrDefault(key, -1L);
+                if (version > oldVersion) {
+                    System.out.println("[IM_CONFIG] current=" + version + ", old=" + oldVersion);
+                    System.out.println("[IM_CONFIG] need update new configs.");
+                    versionMap.put(key, version);
 
-        // 检查是否有配置更新
-        String key = meta.genKey();
-        Long oldVersion = versionMap.getOrDefault(key, -1L);
-        if (version > oldVersion) {
-            System.out.println("[IM_CONFIG] current=" + version + ", old=" + oldVersion);
-            System.out.println("[IM_CONFIG] need update new configs.");
-            versionMap.put(key, version);
-
-            Map<String, String> newConfigs = findAll();
-            configMap.put(key, newConfigs);
-            // 通知所有监听器配置发生了变更
-            System.out.println("[IM_CONFIG] fire an EnvironmentChangeEvent with keys:" + newConfigs.keySet());
-            listeners.forEach(listener ->
-                    listener.onChange(new IMRepositoryChangeListener.ChangeEvent(meta, newConfigs)));
+                    Map<String, String> newConfigs = findAll();
+                    configMap.put(key, newConfigs);
+                    // 通知所有监听器配置发生了变更
+                    System.out.println("[IM_CONFIG] fire an EnvironmentChangeEvent with keys:" + newConfigs.keySet());
+                    listeners.forEach(listener ->
+                            listener.onChange(new IMRepositoryChangeListener.ChangeEvent(meta, newConfigs)));
+                }
+            } catch (Exception e) {
+                System.out.println("[IM_CONFIG] loop request new configs.");
+            }
         }
-
-
     }
 
 
