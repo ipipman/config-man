@@ -6,9 +6,9 @@ POST http://127.0.0.1:9129/update?app=app1&env=dev&ns=public
 Content-Type: application/json
 
 {
-  "ipman.a": "key11",
-  "ipman.b": "key22",
-  "ipman.c": "key33"
+  "ipman.a": "key111",
+  "ipman.b": "key222",
+  "ipman.c": "key333"
 }
 
 

@@ -26,15 +26,17 @@ public interface HttpUtils {
     Logger log = LoggerFactory.getLogger(HttpUtils.class);
     HttpInvoker Default = new OkHttpInvoker();
 
+
     static HttpInvoker getDefault() {
         if (!((OkHttpInvoker) Default).isInitialized()) {
-            int timeout = Integer.parseInt(System.getProperty("utils.http.timeout", "200000"));
+            int timeout = Integer.parseInt(System.getProperty("utils.http.timeout", "600"));
             int maxIdleConnections = Integer.parseInt(System.getProperty("utils.http.maxconn", "128"));
             int keepAliveDuration = Integer.parseInt(System.getProperty("utils.http.keepalive", "300"));
             ((OkHttpInvoker) Default).init(timeout, maxIdleConnections, keepAliveDuration);
         }
         return Default;
     }
+
 
     static String get(String url) {
         return getDefault().get(url);

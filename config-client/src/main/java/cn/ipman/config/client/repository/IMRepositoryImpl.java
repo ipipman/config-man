@@ -3,6 +3,7 @@ package cn.ipman.config.client.repository;
 import cn.ipman.config.client.meta.ConfigMeta;
 import cn.ipman.config.client.meta.Configs;
 import cn.ipman.config.client.utils.HttpUtils;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import org.jetbrains.annotations.NotNull;
 
@@ -90,8 +91,11 @@ public class IMRepositoryImpl implements IMRepository {
             try {
                 // 通过请求Config-Server获取配置版本号
                 String versionPath = meta.versionPath();
-                Long version = HttpUtils.httpGet(versionPath, new TypeReference<Long>() {
+                HttpUtils.OkHttpInvoker okHttpInvoker = new HttpUtils.OkHttpInvoker();
+                okHttpInvoker.init(20_000, 128, 300);
+                Long version = JSON.parseObject(okHttpInvoker.get(versionPath), new TypeReference<Long>() {
                 });
+
                 // 检查是否有配置更新
                 String key = meta.genKey();
                 Long oldVersion = versionMap.getOrDefault(key, -1L);
