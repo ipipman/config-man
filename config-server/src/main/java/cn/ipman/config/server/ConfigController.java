@@ -88,7 +88,7 @@ public class ConfigController {
         log.debug("config version poll in defer debug {}", appKey);
 
         // 延迟返回
-        DeferredResult<Long> deferredResult = new DeferredResult<>(10_000L);
+        DeferredResult<Long> deferredResult = new DeferredResult<>();
         deferredResult.onCompletion(() -> {
             System.out.println("onCompletion");
             appKeyDeferredResult.remove(appKey);
