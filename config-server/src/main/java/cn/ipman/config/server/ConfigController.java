@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Description for this class
+ * 配置服务控制器，提供配置的查询、更新和版本查询功能
  *
  * @Author IpMan
  * @Date 2024/4/27 08:18
@@ -30,14 +30,25 @@ public class ConfigController {
     @Autowired
     DistributedLocks distributedLocks;
 
+    // 用于存储配置的版本信息
     Map<String, Long> VERSION = new HashMap<>();
 
+    // 用于存储appKey与DeferredResult之间的映射，以支持异步返回配置版本信息
     MultiValueMap<String, DeferredResult<Long>> appKeyDeferredResult = new LinkedMultiValueMap<>();
 
+    // 生成应用键
     static String getAppKey(String app, String env, String ns) {
         return app + "-" + env + "-" + ns;
     }
 
+    /**
+     * 查询配置列表。
+     *
+     * @param app 应用名称
+     * @param env 环境标识
+     * @param ns 命名空间
+     * @return 配置列表
+     */
     @RequestMapping("/list")
     public List<Configs> list(@RequestParam("app") String app,
                               @RequestParam("env") String env,
@@ -45,6 +56,15 @@ public class ConfigController {
         return mapper.list(app, env, ns);
     }
 
+    /**
+     * 更新配置。
+     *
+     * @param app 应用名称
+     * @param env 环境标识
+     * @param ns 命名空间
+     * @param params 要更新的配置参数映射
+     * @return 更新后的配置列表
+     */
     @RequestMapping("/update")
     public List<Configs> update(@RequestParam("app") String app,
                                 @RequestParam("env") String env,
@@ -70,6 +90,10 @@ public class ConfigController {
         return mapper.list(app, env, ns);
     }
 
+    /**
+     * 插入或更新配置项
+     * @param configs 查询或更新配置
+     */
     private void insertOrUpdate(Configs configs) {
         Configs conf = mapper.select(configs.getApp(), configs.getEnv(), configs.getNs(), configs.getPkey());
         if (conf == null) {
@@ -79,6 +103,14 @@ public class ConfigController {
         }
     }
 
+    /**
+     * 异步查询配置版本。
+     *
+     * @param app 应用名称
+     * @param env 环境标识
+     * @param ns 命名空间
+     * @return DeferredResult，异步返回配置的版本号
+     */
     @GetMapping("/version")
     public DeferredResult<Long> version(@RequestParam("app") String app,
                                         @RequestParam("env") String env,
@@ -87,7 +119,7 @@ public class ConfigController {
         log.info("config version poll {}", appKey);
         log.debug("config version poll in defer debug {}", appKey);
 
-        // 延迟返回
+        // 创建并返回一个异步结果对象，用于后续通知
         DeferredResult<Long> deferredResult = new DeferredResult<>();
         deferredResult.onCompletion(() -> {
             System.out.println("onCompletion");
@@ -107,7 +139,11 @@ public class ConfigController {
         //return VERSION.getOrDefault(appKey, -1L);
     }
 
-
+    /**
+     * 查询分布式锁的状态。
+     *
+     * @return 分布式锁是否锁定的状态（true表示锁定，false表示未锁定）
+     */
     @GetMapping("/status")
     public boolean version() {
         return distributedLocks.getLocked().get();

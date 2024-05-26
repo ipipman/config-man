@@ -14,6 +14,7 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @SpringBootApplication
 public class ConfigServerApplication implements WebMvcConfigurer {
 
