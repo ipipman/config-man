@@ -1,4 +1,4 @@
-package cn.ipman.config.server;
+package cn.ipman.config.server.api;
 
 import cn.ipman.config.server.dal.ConfigsMapper;
 import cn.ipman.config.server.election.DistributedLocks;
