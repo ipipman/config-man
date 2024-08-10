@@ -54,13 +54,13 @@
 
 ## 安装核心依赖
 
-1. **Client 端**
+**Client 端**
 
-2. 1. **spring-context** ：`Spring Framework `的一个核心模块，主要用于管理应用程序上下文，提供依赖注入、事件机制、资源管理等基础功能。
+1. **spring-context** ：`Spring Framework `的一个核心模块，主要用于管理应用程序上下文，提供依赖注入、事件机制、资源管理等基础功能。
 
 2. **spring-cloud-context**：是 `spring-context` 在分布式场景的一个扩展，支持分布式配置管理、上下文刷新、环境属性和消息总线等高级功能。
 
-3. 1. **需要注意的是，按照 Spring 的规范，在容器启动后，无法通过修改配置文件来动态刷新标记了**`**@ConfigurationProperties**`**注解的类的属性。不过随着**`**spring-cloud**`**的出现，可以通过**`**spring-cloud-context**`**提供的**`**EnvironmentChangeEvent**`**实现配置的动态刷新，从而使应用程序能够在运行时动态修改配置类。**
+3. **需要注意的是，按照 Spring 的规范，在容器启动后，无法通过修改配置文件来动态刷新标记了**`**@ConfigurationProperties**`**注解的类的属性。不过随着**`**spring-cloud**`**的出现，可以通过**`**spring-cloud-context**`**提供的**`**EnvironmentChangeEvent**`**实现配置的动态刷新，从而使应用程序能够在运行时动态修改配置类。**
 
 4. **okhttp**：用于 client端 通过 http 访问 server端的网络工具类。
 
@@ -87,9 +87,9 @@
 
 
 
-1. **Server 端**
+**Server 端**
 
-2. 1. **spring-web**：作为配置中心的`Server`端，本文会用MVC特性实现长轮询。
+1. **spring-web**：作为配置中心的`Server`端，本文会用MVC特性实现长轮询。
 2. **h2 或 mysql**： 任意一个即可，用于持久化配置信息，配置中心一般都会用 `mysql` 进行持久化数据（*`H2`**内存型，方便演示*）。
 3. **mybatis**： ORM框架，方便与 `h2` 和 `mysql`数据库 进行CRUD操作。
 
