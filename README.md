@@ -60,7 +60,7 @@
 
 2. **spring-cloud-context**：是 `spring-context` 在分布式场景的一个扩展，支持分布式配置管理、上下文刷新、环境属性和消息总线等高级功能。
 
-3. **需要注意的是，按照 Spring 的规范，在容器启动后，无法通过修改配置文件来动态刷新标记了**`**@ConfigurationProperties**`**注解的类的属性。不过随着**`**spring-cloud**`**的出现，可以通过**`**spring-cloud-context**`**提供的**`**EnvironmentChangeEvent**`**实现配置的动态刷新，从而使应用程序能够在运行时动态修改配置类。**
+3. **需要注意的是，按照 Spring 的规范，在容器启动后，无法通过修改配置文件来动态刷新标记了**`@ConfigurationProperties`**注解的类的属性。不过随着**`spring-cloud`**的出现，可以通过**`spring-cloud-context`**提供的**`EnvironmentChangeEvent`**实现配置的动态刷新，从而使应用程序能够在运行时动态修改配置类。**
 
 4. **okhttp**：用于 client端 通过 http 访问 server端的网络工具类。
 
@@ -126,7 +126,7 @@
 
 目前基本上都是**至少3个维度**管理key-value配置，目标是为了满足**管理不同应用、不同环境、不同集群、不同空间**的配置，进行合理的分层设计，便于规范的权限、流程治理等特性
 
-<img src="https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100915.png" alt="image-20240810174918193" style="zoom:50%;" />
+<img src="https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100915.png" alt="image-20240810174918193" style="width:700px;" />
 
 
 
@@ -198,8 +198,8 @@ public interface ConfigsMapper {
 
 1. 在`classpath`目录下（即`resources`文件夹），添加一个名为`db.sql`的文件，用于创建和初始化配置表`configs`的数据。
 
-2. 1. pkey：参数键
-2. pval：参数值
+1.1 pkey：参数键
+1.2 pval：参数值
 
 ```
 create table if not exists `configs` (
@@ -225,7 +225,8 @@ insert into configs(app, env, ns, pkey, pval) values('app1', 'dev', 'public', 'i
 
 #### 支持长轮询
 
-<img src="https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100945.png" alt="image-20240810174940635" style="zoom:50%;" />
+<img src="https://ipman-1304583208.cos.ap-nanjing.myqcloud.com/rpcman/2024-08-10-100945.png" alt="image-20240810174940635" style="width:700px;" />
+
 
 目标是为了客户端和服务端保持了一个长连接，从而能第一时间获得配置更新的推送。参考 Apollo 考虑到会有数万客户端向服务端发起长连，在服务端使用了`async servlet` (Spring DeferredResult) 来服务`Http Long Polling`请求。
 
@@ -461,14 +462,14 @@ server:
 
 
 
-1. **集成自定义Spring配置源**
+**集成自定义Spring配置源**
 
-2. 1. **IMPropertySource**：将自定义的`IMConfigService`配置实现类包装成`Spring Framework`的键值对配置属性源。这样就支持了在`@Value`注解和`@ConfigurationProperties`注解下获取配置的场景了。
+1. **IMPropertySource**：将自定义的`IMConfigService`配置实现类包装成`Spring Framework`的键值对配置属性源。这样就支持了在`@Value`注解和`@ConfigurationProperties`注解下获取配置的场景了。
 2. **IMConfigService**：自定义配置实现类，用于客户端应用获取配置信息，包括获取所有配置、按键获取指定配置、处理配置变化等。
 
-3. **与Server端建立通信**
+**与Server端建立通信**
 
-4. 1. **IMRepository**：用于从`Server端`获取配置，通过长轮询检测应用配置版本变化，并获取最新配置信息。当检测到配置变化时，通知`IMConfigService`处理配置变化。
+1. **IMRepository**：用于从`Server端`获取配置，通过长轮询检测应用配置版本变化，并获取最新配置信息。当检测到配置变化时，通知`IMConfigService`处理配置变化。
 2. **IMRepositoryChangeListener**：定义配置变化时的回调方法，由`IMRepository`的配置变更检测触发，`IMConfigService`负责实现和处理配置变化。
 3. **ConfigMeta**：用于配置`Client端`访问`Server端`的接口地址、应用、环境和命名空间等信息。
 
@@ -756,7 +757,7 @@ public interface IMRepository {
 
 
 
-**IMRepositoryImpl：**实现了IMRepository接口的配置仓库类，用于管理和更新配置数据。最核心的方法是 `heartbeat` 用于通过`Server端`获取配置的版本号，用于检测配置版本是否需要更新。
+**IMRepositoryImpl**：实现了IMRepository接口的配置仓库类，用于管理和更新配置数据。最核心的方法是 `heartbeat` 用于通过`Server端`获取配置的版本号，用于检测配置版本是否需要更新。
 
 - 注意：以下关于 HttpUtils 的方法代码省略
 
@@ -1230,7 +1231,7 @@ public class PlaceholderHelper {
 
 **动态处理被 @Value 注解的配置目标**
 
-目标：*由于**`EnvironmentChangeEvent`**应用事件只能动态修改**`@ConfigurationProperties`**相关的类属性，因此标记了**`@Value`**注解的类成员变量无法通过这种方式进行动态修改。为了解决这个问题，需要采用以下方式进行处理：*
+目标：由于`EnvironmentChangeEvent`应用事件只能动态修改`@ConfigurationProperties`相关的类属性，因此标记了`@Value`注解的类成员变量无法通过这种方式进行动态修改。为了解决这个问题，需要采用以下方式进行处理：
 
 
 
@@ -1302,20 +1303,20 @@ public interface FieldUtils {
 
 当`IMConfigServiceImpl`触发配置变更后，会发布`EnvironmentChangeEvent`应用事件。此时，需要监听这个事件，并对标记了`@Value`注解的成员变量进行动态赋值。
 
-1. **实现**`**BeanPostProcessor**`**后置处理器**：
+1. **实现**`BeanPostProcessor`**后置处理器**：
 
-2. - 扫描类中是否存在`@Value`注解的成员变量。
+- 扫描类中是否存在`@Value`注解的成员变量。
 - 如果存在，继续处理。
 
-3. **记录注解信息**：
+2. **记录注解信息**：
 
-4. - 获取成员变量实例，提取`${}`占位符信息（例如，`@Value("${some.key}")`中的`some.key`）。
+- 获取成员变量实例，提取`${}`占位符信息（例如，`@Value("${some.key}")`中的`some.key`）。
 - 获取`Field`实例、Bean 实例和 key 名称。
 - 将这些信息记录到`VALUE_HOLDER`集合中，以便后续使用。
 
-5. **监听**`**EnvironmentChangeEvent**`**配置变更事件**：
+3. **监听**`EnvironmentChangeEvent`**配置变更事件**：
 
-6. - 当监听到`EnvironmentChangeEvent`事件时，从`VALUE_HOLDER`中获取与 key 相关的所有`Field`实例。
+- 当监听到`EnvironmentChangeEvent`事件时，从`VALUE_HOLDER`中获取与 key 相关的所有`Field`实例。
 - 通过反射解析并设置新的值。
 
 ```
@@ -1413,7 +1414,7 @@ public class SpringValueProcessor implements BeanPostProcessor, BeanFactoryAware
 
 #### **最终提供客户端集成方式**
 
-目标：*上述代码讲解了如何实现 Spring 配置数据源的集成、客户端和服务器端的长轮询机制、配置获取、变更通知，以及**`@Value`**注解的处理方式。接下来，从使用的角度出发，我们需要思考如何有效利用这个注册中心的功能。*
+目标：*上述代码讲解了如何实现 Spring 配置数据源的集成、客户端和服务器端的长轮询机制、配置获取、变更通知，以及`@Value` 注解的处理方式。接下来，从使用的角度出发，我们需要思考如何有效利用这个注册中心的功能。*
 
 
 
@@ -1421,11 +1422,11 @@ public class SpringValueProcessor implements BeanPostProcessor, BeanFactoryAware
 
 `IMConfigRegistry`是一个实现`ImportBeanDefinitionRegistrar`接口的类，用于在 Spring 容器中注册`BeanDefinition`。其核心功能如下：
 
-- **注册 BeanDefinition**：`registerBeanDefinitions`方法会在导入注解元数据时被调用。
+**注册 BeanDefinition**：`registerBeanDefinitions`方法会在导入注解元数据时被调用。
 
-- **判断 PropertySourcesProcessor 是否已注册**：
+**判断 PropertySourcesProcessor 是否已注册**：
 
-- - 如果已注册，输出 "PropertySourcesProcessor already registered" 并返回。
+- 如果已注册，输出 "PropertySourcesProcessor already registered" 并返回。
 - 如果未注册，输出 "register PropertySourcesProcessor"，并创建`PropertySourcesProcessor`的`BeanDefinition`，然后将其注册到 Spring 容器中。
 
 通过这种方式，`IMConfigRegistry`确保了客户端的所有功能都能正确注入到 Spring 容器中，从而使得应用可以有效利用注册中心的功能。
