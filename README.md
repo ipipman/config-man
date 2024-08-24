@@ -161,7 +161,7 @@ mybatis:
 
 
 
-1. 创建  `Configs `配置类、`ConfigsMapper` 接口类，基于 MyBatis 提供针对应用 (`app`)、命名空间 (`ns`) 和环境 (`env`) 的 CRUD 方法。
+2. 创建  `Configs `配置类、`ConfigsMapper` 接口类，基于 MyBatis 提供针对应用 (`app`)、命名空间 (`ns`) 和环境 (`env`) 的 CRUD 方法。
 
 ```
 @Data
@@ -196,10 +196,9 @@ public interface ConfigsMapper {
 
 
 
-1. 在`classpath`目录下（即`resources`文件夹），添加一个名为`db.sql`的文件，用于创建和初始化配置表`configs`的数据。
+3. 在`classpath`目录下（即`resources`文件夹），添加一个名为`db.sql`的文件，用于创建和初始化配置表`configs`的数据。
 
-1.1 pkey：参数键
-1.2 pval：参数值
+> pkey：参数键 ,  pval：参数值
 
 ```
 create table if not exists `configs` (
